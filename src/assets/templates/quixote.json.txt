@@ -1,0 +1,10 @@
+{
+  "title": "Don Quijote de la Mancha",
+  "author": "Miguel de Cervantes",
+  "powered": "Powered by react-pdf",
+  "chapters": {
+    "1": {
+      "title":"Capítulo I: Que trata de la condición y ejercicio del famoso hidalgo D. Quijote de la Mancha"
+    }
+  }
+}
