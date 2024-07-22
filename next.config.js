@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  basePath: "/pdf-kitchen", // TODO: make this dynamic
   output: "export",  // <=== enables static exports
   reactStrictMode: true,
 };
