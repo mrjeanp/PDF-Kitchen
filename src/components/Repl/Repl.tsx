@@ -76,7 +76,6 @@ const Repl: FC<ReplProps> = ({
 
   return (
     <>
-      {/* {loading && <Spinner />} */}
 
       <StyledWrapper className="replWrapper">
         <StyledCodePanel className="codePanel" active={activeTab === 'code'}>
