@@ -5,33 +5,28 @@ import React from 'react';
 
 import theme from '../src/constants/theme';
 
-import pkg from '../package.json';
+import App from 'next/app';
 
 // Global styles
 require('../public/styles/index.css');
 
-
-import App from 'next/app';
+const config = require("../app")
 
 class MyApp extends App {
   render() {
     const { Component, pageProps, _router } = this.props;
 
-    const getTitle = () => {
-      return pkg.name.replace('pdf',"PDF").split("-").map((v, i) => v.charAt(0).toUpperCase() + v.slice(1)).join(" ").concat(" | ", pkg.description)
-    }
-
     return (
       <>
         <Head>
-          <title>{getTitle()}</title>
-          <meta name='description' content={pkg.description} />
+          <title>{config.title}</title>
+          <meta name='description' content={config.description} />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
         </Head>
 
-          <ThemeProvider theme={theme}>
-            <Component {...pageProps} />
-          </ThemeProvider>
+        <ThemeProvider theme={theme}>
+          <Component {...pageProps} />
+        </ThemeProvider>
 
         <Analytics />
       </>

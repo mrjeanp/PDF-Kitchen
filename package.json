@@ -1,7 +1,5 @@
 {
   "name": "pdf-kitchen",
-  "description": "A web app for cooking up PDF's with React and JSON",
-  "version": "0.90",
   "license": "MIT",
   "private": true,
   "homepage": "https://github.com/mrjeanp/pdf-kitchen",

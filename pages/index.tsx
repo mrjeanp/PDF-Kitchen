@@ -16,7 +16,7 @@ import LinkCopyIcon from '../src/assets/svg/copy-link.svg';
 import GithubIcon from '../src/assets/svg/github.svg';
 
 import packageJson from '../package.json';
-import basePath from '../src/lib/path';
+import { uri } from '../src/lib/path';
 
 const Repl = dynamic(import('../src/components/Repl/Repl'), {
   loading: () => <p>Loading...</p>,
@@ -123,7 +123,7 @@ const ReplPage = ({ router }) => {
           href="https://react-pdf.org/components"
           target="_blank"
         >
-          <img src={basePath() + '/images/logo.png'} height={32} />
+          <img src={uri('/images/logo.png')} height={32} />
         </a>
       </Nav>
       <Section>

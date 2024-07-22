@@ -1,5 +1,7 @@
-const nextConfig = require('../../next.config');
+import appConfig from '../../app';
 
-export default function basePath() {
-  return nextConfig.basePath as string;
+const path = require('path');
+
+export function uri(subpath: string) {
+  return path.join(appConfig.basePath, subpath);
 }

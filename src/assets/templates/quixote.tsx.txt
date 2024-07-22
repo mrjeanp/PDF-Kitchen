@@ -8,7 +8,7 @@ const Quixote = () => (
       <Text style={styles.author}>{json.author}</Text>
       <Image
         style={styles.image}
-        src="/images/quijote1.jpg"
+        src="./images/quijote1.jpg"
       />
       <Text style={styles.subtitle}>
         {json.chapters["1"].title}
@@ -89,7 +89,7 @@ const Quixote = () => (
       </Text>
       <Image
         style={styles.image}
-        src="/images/quijote2.png"
+        src="./images/quijote2.png"
       />
       <Text style={styles.text}>
         Hechas, pues, estas prevenciones, no quiso aguardar más tiempo a poner

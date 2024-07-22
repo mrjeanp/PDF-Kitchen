@@ -1,11 +1,11 @@
 /** @type {import('next').NextConfig} */
 
+const app = require('./app')
+
 const path = require("path")
 
-
-
 const nextConfig = {
-  basePath: process.env.GITHUB_ACTIONS ? "/pdf-kitchen" : "", // TODO: make this dynamic
+  basePath: app.basePath,
   output: "export",  // <=== enables static exports
   reactStrictMode: true,
 };
