@@ -8,14 +8,15 @@ import JsonIcon from '../src/assets/svg/json.svg';
 import PdfDownloadIcon from '../src/assets/svg/pdf-download.svg';
 import ReactIcon from '../src/assets/svg/react.svg';
 import MobileTabs from '../src/components/Repl/MobileTabs';
-import { LZCompress, LZDecompress } from '../src/lib/compress';
 import media from '../src/constants/media';
+import { LZCompress, LZDecompress } from '../src/lib/compress';
 
 import CopyCode from '../src/assets/svg/copy-code.svg';
 import LinkCopyIcon from '../src/assets/svg/copy-link.svg';
 import GithubIcon from '../src/assets/svg/github.svg';
 
 import packageJson from '../package.json';
+import basePath from '../src/lib/path';
 
 const Repl = dynamic(import('../src/components/Repl/Repl'), {
   loading: () => <p>Loading...</p>,
@@ -122,7 +123,7 @@ const ReplPage = ({ router }) => {
           href="https://react-pdf.org/components"
           target="_blank"
         >
-          <img src="/images/logo.png" height={32} />
+          <img src={basePath() + '/images/logo.png'} height={32} />
         </a>
       </Nav>
       <Section>
