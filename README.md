@@ -4,13 +4,15 @@ A web app for cooking up PDF's with React and JSON. Powered by [React PDF](https
 
 ## Preview:
 
-![PDF Kitchen Preview](preview.png)
+<img width="1725" alt="PDF Kitchen preview" src="https://github.com/user-attachments/assets/3091072e-e573-492f-949b-4148ee062605">
 
 
 ## Features
-1. Render PDFs dynamically using React.
+1. Render PDFs dynamically using JSX.
 2. Use JSON as source of data.
-3. Share the code easily via URL.
+3. Load JSX and JSON files easily.
+4. Download your PDF by clicking a button.
+5. Free and open source forever.
 
 ## Docs
 
