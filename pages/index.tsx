@@ -1,38 +1,51 @@
 import styled from '@emotion/styled';
 import dynamic from 'next/dynamic';
 import { withRouter } from 'next/router';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 
 import classNames from 'classnames';
+import MobileTabs from '../src/components/Repl/MobileTabs';
+import media from '../src/constants/media';
+
+// SVG Icons
+import CopyIcon from '../src/assets/svg/copy.svg';
+import GithubIcon from '../src/assets/svg/github.svg';
 import JsonIcon from '../src/assets/svg/json.svg';
 import PdfDownloadIcon from '../src/assets/svg/pdf-download.svg';
 import ReactIcon from '../src/assets/svg/react.svg';
-import MobileTabs from '../src/components/Repl/MobileTabs';
-import media from '../src/constants/media';
-import { LZCompress, LZDecompress } from '../src/lib/compress';
+import UploadIcon from '../src/assets/svg/upload.svg';
 
-import CopyCode from '../src/assets/svg/copy-code.svg';
-import LinkCopyIcon from '../src/assets/svg/copy-link.svg';
-import GithubIcon from '../src/assets/svg/github.svg';
-
-import packageJson from '../package.json';
+import copyToClipboard from '../src/lib/copyToClipboard.fn';
 import { uri } from '../src/lib/path';
+
+const app = require('../app');
 
 const Repl = dynamic(import('../src/components/Repl/Repl'), {
   loading: () => <p>Loading...</p>,
 });
 
-const sampleJSX = require('raw-loader!../src/assets/templates/quixote.tsx.txt');
-const sampleJSON = require('raw-loader!../src/assets/templates/quixote.json.txt');
+const sampleJSX = require('raw-loader!../src/assets/templates/cv.jsx.txt');
+const sampleJSON = require('raw-loader!../src/assets/templates/cv.json.txt');
 
 const ReplPage = ({ router }) => {
+  const fileInput = useRef<HTMLInputElement>(null);
+
   const [jsx, setJSX] = useState(sampleJSX);
 
   const [json, setJSON] = useState(sampleJSON);
 
-  const [currentLang, setCurrentLang] = useState<'jsx' | 'json'>('jsx');
+  const [editorLang, setEditorLang] = useState<'jsx' | 'json'>('jsx');
 
-  // used to switch between editor and PDFViewer on mobile screen.
+  // for clipboard copying and file input {
+  const codes = { jsx, json };
+  const setCode = {
+    jsx: setJSX,
+    json: setJSON,
+  };
+  const currentCode = codes[editorLang];
+  // }
+
+  // used to switch between CodeEditor and PDFViewer on mobile screen.
   const [activeTab, setActiveTab] = useState<'code' | 'pdf'>('pdf');
 
   // blob url of the PDF rendered by PDFViewer.js
@@ -40,57 +53,62 @@ const ReplPage = ({ router }) => {
 
   const [error, setError] = useState(null);
 
-  const copyToClipboard = useCallback(async (text: string, msg?: string) => {
-    if (typeof window === undefined) return;
-    await window.navigator.clipboard.writeText(text);
-    alert(msg ?? 'Value copied to clipboard');
-  }, []);
-
-  // get query params
-  const query = router.query;
-
-  // Load samples
-  const loadSamples = useCallback(async () => {
-    let initJSX = query.jsx ? LZDecompress(query.jsx) : await sampleJSX;
-    let initJSON = query.json ? LZDecompress(query.json) : sampleJSON;
-
-    setJSX(initJSX);
-    setJSON(initJSON);
-  }, [query.jsx, query.json]);
-
+  // retrieve and save codes
   useEffect(() => {
-    loadSamples();
-  }, [query.jsx, query.json]);
+    const savedJSX = window.localStorage.getItem('jsx');
+    const savedJSON = window.localStorage.getItem('json');
 
-  // SHARE BUTTON URL
-  const shareUrl = useMemo(() => {
-    if (typeof window === 'undefined') return '';
-    return `${window.location.href}?json=${LZCompress(json)}&jsx=${LZCompress(
-      jsx,
-    )}`;
+    if (jsx !== sampleJSX || json !== sampleJSON) {
+      jsx && window.localStorage.setItem('jsx', jsx);
+      json && window.localStorage.setItem('json', json);
+    } else if (jsx !== savedJSX || json !== savedJSON) {
+      savedJSON !== null && setJSON(savedJSON);
+      savedJSX !== null && setJSX(savedJSX);
+    }
   }, [jsx, json]);
 
-  // if (mount.loading) return null;
+  const handleFileInputChange = useCallback(
+    async (event: ChangeEvent<HTMLInputElement>) => {
+      const { target: input } = event;
+
+      const files = input.files;
+
+      if (files) {
+        const file = files.item(0);
+        const extension = file.name.split('.').pop();
+        if (extension === 'jsx' || extension === 'json') {
+          const content = await file.text();
+          setCode[extension](content);
+          setEditorLang(extension)
+        } else {
+          setError(new Error('Unsuported file type'));
+          setTimeout(() => setError(null), 3000);
+        }
+        input.value = null;
+      }
+    },
+    [],
+  );
 
   return (
     <Main>
       <Nav>
         <button
           className={classNames({
-            active: currentLang === 'jsx',
+            active: editorLang === 'jsx',
           })}
-          title="React Code"
-          onClick={() => setCurrentLang('jsx')}
+          title="JSX Code"
+          onClick={() => setEditorLang('jsx')}
         >
           <ReactIcon width={32} height={32} />
         </button>
 
         <button
           className={classNames({
-            active: currentLang === 'json',
+            active: editorLang === 'json',
           })}
           title="JSON Data"
-          onClick={() => setCurrentLang('json')}
+          onClick={() => setEditorLang('json')}
         >
           <JsonIcon width={28} height={28} />
         </button>
@@ -104,18 +122,27 @@ const ReplPage = ({ router }) => {
           <PdfDownloadIcon height={32} />
         </a>
 
-        <button title="Copy JSX" onClick={() => copyToClipboard(jsx)}>
-          <CopyCode height={28} />
+        <button title="Upload JSON/JSX" onClick={() => fileInput.current.click()}>
+          <UploadIcon height={32} />
+          <input
+            onChange={handleFileInputChange}
+            ref={fileInput}
+            type="file"
+            accept=".jsx, .json"
+            hidden
+          />
         </button>
 
         <button
-          title="Copy Share Link"
-          onClick={() => copyToClipboard(shareUrl)}
+          title="Copy code"
+          onClick={() =>
+            copyToClipboard(currentCode, `${editorLang.toUpperCase()} copied`)
+          }
         >
-          <LinkCopyIcon height={28} />
+          <CopyIcon height={32} />
         </button>
 
-        <a title="Go to Github" target="_blank" href={packageJson.homepage}>
+        <a title="Go to Github" target="_blank" href={app.repository}>
           <GithubIcon style={{ color: 'black' }} height={32} />
         </a>
         <a
@@ -133,7 +160,7 @@ const ReplPage = ({ router }) => {
           jsx={jsx}
           onJSONChange={setJSON}
           onJSXChange={setJSX}
-          currentLang={currentLang}
+          currentLang={editorLang}
           activeTab={activeTab}
           onUrlChange={setDocumentUrl}
           onError={setError}

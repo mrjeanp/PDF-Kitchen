@@ -2,7 +2,6 @@
   "name": "pdf-kitchen",
   "license": "MIT",
   "private": true,
-  "homepage": "https://github.com/mrjeanp/pdf-kitchen",
   "scripts": {
     "dev": "next",
     "build": "next build",

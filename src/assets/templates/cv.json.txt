@@ -1,0 +1,87 @@
+{
+  "contact": {
+    "name": "John Smith",
+    "email": "example@email.com",
+    "phone": "+1234567890",
+    "photo": "",
+    "address": {
+      "city": "NY",
+      "country": "United States",
+      "planet": "Earth"
+    },
+    "links": ["https://examplewebsite.com"]
+  },
+  "jobs": [
+    {
+      "title": "Senior Software Engineer",
+      "organization": "Awesome Company, Inc",
+      "address": "Remote - Miami, FL, USA",
+      "website": "https://company.com",
+      "summary": "Collaborated with cross-functional teams to deliver exceptional frontend experiences. Successfully implemented new features and user-friendly UI components, incorporated engaging animations, ensuring a high-quality and bug-free user experience.",
+      "start_date": "June 2021",
+      "end_date": "April 2023",
+      "context": "dev"
+    },
+    {
+      "title": "Software Engineer",
+      "organization": "Mid Company, LLC",
+
+      "website": "https://www.midcompany.com",
+      "summary": "Helped build user interfaces (UI) for one of Verizon's internal network management applications that is used for setting up, configuring, and maintaining their networks.",
+      "start_date": "January 2020",
+      "end_date": "July 2021",
+      "context": "dev"
+    },
+    {
+      "title": "Full Stack Web Developer",
+      "organization": "Small Company, LLC",
+      "website": "https://smallcompany.com",
+      "summary": "Built from stratch a sports betting management system in the LAMP stack using HTML/CSS and JavaScript for the frontend and PHP for the backend. Also including a Java plugin that allows the application to print physical tickets from the web browser.",
+      "start_date": "October 2014",
+      "end_date": "October 2015",
+      "context": "dev"
+    },
+    {
+      "title": "Customer Service Associate",
+      "organization": "CallCenter LLC",
+      "website": "https://www.callcenter.com",
+      "start_date": "February 2024",
+      "end_date": "April 2024",
+      "context": "callcenter"
+    }
+  ],
+  "keywords": [
+    "DSA",
+    "JavaScript/TypeScript",
+    "PHP",
+    "SQLite",
+    "HTML/CSS",
+    "React/React Native",
+    "Node.js",
+    "Next.js",
+    "C basics",
+    "Java basics",
+    "Golang basics",
+    "PostgreSQL basics",
+    "MongoDB basics",
+    "Dart+Flutter basics",
+    "Linux basics"
+  ],
+  "projects": [
+    {
+      "name": "PDF Kitchen",
+      "link": "https://github.com/mrjeanp/pdf-kitchen",
+      "summary": "A minimalistic web app for crafting PDFs using JSX + JSON."
+    },
+    {
+      "name": "Side Project",
+      "link": "https://www.sideproject.org",
+      "summary": "A PHP library for the payment gateway Azul (Dominican Republic), known for being problematic to work with, I made this library with some additional documentation to help other developers with the integration."
+    }
+
+  ],
+  "config": {
+    "sections": ["contact", "keywords", "jobs", "projects"],
+    "contexts": ["dev", "callcenter"]
+  }
+}

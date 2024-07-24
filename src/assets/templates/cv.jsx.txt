@@ -1,0 +1,138 @@
+const currentContext = 'dev'
+const CV = () => (
+  <Document>
+    <Page style={styles.body}>
+      <Text style={styles.title}>{json.contact.name}</Text>
+      <Text style={styles.contact}>✉️ {json.contact.email}     📞 {json.contact.phone}     📍{json.contact.address.country} </Text>
+        
+      <View style={[styles.section]}>
+        <Text style={styles.subtitle}>Skills </Text>
+        <View style={[styles.subSection]}>
+          <Text style={styles.text}>
+            {json.keywords.join(" - ")}
+          </Text>
+        </View>
+      </View>
+
+
+      <View style={styles.section}>
+        <Text style={styles.subtitle}>Projects </Text>
+        {json.projects.map(proj => (<View style={[styles.subSection]}>
+          <View style={[styles.row]}>
+            <Text style={[ styles.text, styles.textMedium ]}>
+              {proj.name}
+            </Text>
+            
+            <Link src={proj.link} style={styles.text}>{proj.link}</Link>
+          </View>
+          <View>
+            
+            <Text style={styles.text}>
+              {proj.summary}</Text>
+          </View>
+        </View>))}
+      </View>
+
+      <View style={[styles.section]}>
+        <Text style={styles.subtitle}>Work Experience</Text>
+        {json.jobs.filter(j => j.context === currentContext)
+          .map(job => (
+          <View style={[styles.subSection]}>
+          <View style={[styles.row]}>
+            <Text style={[styles.text, styles.textMedium]}>
+              {job.title}
+            </Text>
+
+            <Text style={[styles.text]}>
+              {job.start_date} - {job.end_date}  
+              -  
+              <Link src={job.website} style={styles.text}>{job.organization}</Link>
+              
+            </Text>
+          </View>
+            
+            <Text style={styles.text}>
+              {job.summary}</Text>
+          </View>
+        ))}
+      </View>
+
+      <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => (
+        `${pageNumber} / ${totalPages}`
+      )} fixed />
+    </Page>
+  </Document>
+);
+
+Font.registerEmojiSource({
+  format: 'png',
+  url: 'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/',
+});
+const styles = StyleSheet.create({
+  section: {
+    marginVertical: 20
+  },
+  subSection: {
+    marginVertical: 10
+  },
+  row: {
+
+    marginVertical: 5,
+    flexDirection: 'row',
+    justifyContent: "space-between",
+    alignItems:"center",
+    
+  },
+  body: {
+    padding: 24,
+    fontFamily: "Times-Roman"
+  },
+  title: {
+    fontSize: 24,
+    textAlign: 'center',
+
+  },
+  contact: {
+    fontSize: 12,
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  subtitle: {
+    fontSize: 18,
+    textAlign: 'center'
+  },
+  text: {
+    fontSize: 12,
+    textAlign: 'justify',
+  },
+  textMedium: {
+    fontSize: 16
+  },
+  heading: {
+    marginBottom: 10
+  },
+  textBold: {
+    fontFamily: 'Times-Bold'
+  },
+  image: {
+    marginVertical: 15,
+    marginHorizontal: 100,
+  },
+  header: {
+    fontSize: 12,
+    marginBottom: 20,
+    textAlign: 'center',
+    color: 'grey',
+  },
+  pageNumber: {
+    position: 'absolute',
+    fontSize: 12,
+    bottom: 5,
+    left: 0,
+    right: 0,
+    textAlign: 'center',
+    color: 'grey',
+  },
+});
+
+ReactPDF.render(<CV />);
