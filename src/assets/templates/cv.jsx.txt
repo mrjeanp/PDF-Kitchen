@@ -1,12 +1,21 @@
 const currentContext = 'dev'
+const HR = () => {
+  return (
+    <View style={{borderBottomWidth:1}} />
+  )
+}
 const CV = () => (
   <Document>
     <Page style={styles.body}>
       <Text style={styles.title}>{json.contact.name}</Text>
-      <Text style={styles.contact}>✉️ {json.contact.email}     📞 {json.contact.phone}     📍{json.contact.address.country} </Text>
+      <View style={styles.contact}>
+        <Text>✉️ {json.contact.email}</Text>
+        <Text>🌐 {json.contact.links[0]} </Text>
+      </View>
         
       <View style={[styles.section]}>
         <Text style={styles.subtitle}>Skills </Text>
+        <HR/>
         <View style={[styles.subSection]}>
           <Text style={styles.text}>
             {json.keywords.join(" - ")}
@@ -14,16 +23,16 @@ const CV = () => (
         </View>
       </View>
 
-
       <View style={styles.section}>
         <Text style={styles.subtitle}>Projects </Text>
+        <HR/>
         {json.projects.map(proj => (<View style={[styles.subSection]}>
           <View style={[styles.row]}>
             <Text style={[ styles.text, styles.textMedium ]}>
               {proj.name}
             </Text>
             
-            <Link src={proj.link} style={styles.text}>{proj.link}</Link>
+            <Link src={proj.link} style={[styles.text, styles.link]}>{proj.link}</Link>
           </View>
           <View>
             
@@ -35,7 +44,8 @@ const CV = () => (
 
       <View style={[styles.section]}>
         <Text style={styles.subtitle}>Work Experience</Text>
-        {json.jobs.filter(j => j.context === currentContext)
+        <HR/>
+        {json.jobs.filter(j => j.context === 'dev')
           .map(job => (
           <View style={[styles.subSection]}>
           <View style={[styles.row]}>
@@ -46,7 +56,7 @@ const CV = () => (
             <Text style={[styles.text]}>
               {job.start_date} - {job.end_date}  
               -  
-              <Link src={job.website} style={styles.text}>{job.organization}</Link>
+              <Link src={job.website} style={[styles.text, styles.link]}>{job.organization}</Link>
               
             </Text>
           </View>
@@ -69,33 +79,40 @@ Font.registerEmojiSource({
   url: 'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/',
 });
 const styles = StyleSheet.create({
+  link: {
+    color: "black"
+  },
   section: {
-    marginVertical: 20
+    marginVertical: 10
   },
   subSection: {
     marginVertical: 10
   },
   row: {
-
     marginVertical: 5,
     flexDirection: 'row',
     justifyContent: "space-between",
     alignItems:"center",
-    
   },
   body: {
     padding: 24,
-    fontFamily: "Times-Roman"
+    paddingHorizontal: 40,
+    fontFamily: "Times-Roman",
+    borderWidth: 5,
+    borderColor: "#199c31"
   },
   title: {
     fontSize: 24,
     textAlign: 'center',
-
+    marginBottom: 10
   },
   contact: {
     fontSize: 12,
     textAlign: 'center',
     marginBottom: 20,
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 15
   },
   subtitle: {
     fontSize: 18,
@@ -136,3 +153,4 @@ const styles = StyleSheet.create({
 });
 
 ReactPDF.render(<CV />);
+

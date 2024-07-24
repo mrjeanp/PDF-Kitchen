@@ -21,7 +21,7 @@ const PageNavigator = ({
   onPreviousPage,
   onNextPage,
 }) => {
-  if (numPages <= 1) return null;
+  // if (numPages <= 1) return null;
 
   return (
     <Wrapper id='PageNavigator'>
