@@ -12,7 +12,8 @@ A web app for cooking up PDF's with React and JSON. Powered by [React PDF](https
 2. Use JSON as source of data.
 3. Load JSX and JSON files easily.
 4. Download your PDF by clicking a button.
-5. Free and open source forever.
+5. Automatically saved code to localStorage.
+6. Free and open source forever.
 
 ## Docs
 
