@@ -14,7 +14,6 @@ module.exports = {
   ...nextConfig,
   webpack: (config, options) => {
 
-
     const patches = {
       "node_modules/@react-pdf/layout/lib/index.js": "src/patches/@react-pdf/layout/lib/index.js"
     }
