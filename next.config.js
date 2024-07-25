@@ -15,12 +15,12 @@ module.exports = {
   webpack: (config, options) => {
 
 
-    const source = "node_modules/@react-pdf/layout/lib/index.js"
-    const patch = "src/patches/@react-pdf/layout/lib/index.js"
-    config.resolve.alias[path.resolve(__dirname, source)] = path.resolve(__dirname, patch)
-
-    // const cjs = "node_modules/@react-pdf/layout/lib/index.cjs"
-    // config.resolve.alias[path.resolve(__dirname, cjs)] = path.resolve(__dirname, to)
+    const patches = {
+      "node_modules/@react-pdf/layout/lib/index.js": "src/patches/@react-pdf/layout/lib/index.js"
+    }
+    for (const [source, patch] of Object.entries(patches)) {
+      config.resolve.alias[path.resolve(__dirname, source)] = path.resolve(__dirname, patch)
+    }
 
     config.module.rules.push({
       test: /\.md/,
