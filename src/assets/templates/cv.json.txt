@@ -3,7 +3,7 @@
     "name": "John Smith",
     "email": "example@email.com",
     "phone": "+1234567890",
-    "photo": "",
+    "photo": "https://avatars.githubusercontent.com/u/47196328?v=4",
     "address": {
       "city": "NY",
       "country": "United States",
@@ -76,7 +76,7 @@
     {
       "name": "Side Project",
       "link": "https://www.sideproject.org",
-      "summary": "A PHP library for the payment gateway Azul (Dominican Republic), known for being problematic to work with, I made this library with some additional documentation to help other developers with the integration."
+      "summary": "A PHP library for Azul, a payment gateway. Known for being problematic to work with, I made this library with some additional documentation to help other developers with the integration."
     }
 
   ],

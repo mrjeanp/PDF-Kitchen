@@ -1,12 +1,15 @@
 const currentContext = 'dev'
+
 const HR = () => {
   return (
     <View style={{borderBottomWidth:1}} />
   )
 }
+
 const CV = () => (
   <Document>
     <Page style={styles.body}>
+      <Image style={[styles.photo]} src={json.contact.photo} />
       <Text style={styles.title}>{json.contact.name}</Text>
       <View style={styles.contact}>
         <Text>✉️ {json.contact.email}</Text>
@@ -79,6 +82,13 @@ Font.registerEmojiSource({
   url: 'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/',
 });
 const styles = StyleSheet.create({
+  photo: {
+        height: 64,
+        width: 64,
+        objectFit: 'cover',
+        alignSelf: 'center',
+        marginBottom: 10,
+      },
   link: {
     color: "black"
   },
